@@ -19,7 +19,7 @@ try:
         ml_model.train_and_save()
         logger.info("Training complete.")
     # Warm-up load to catch any persistence issues early
-    ml_model._load_model()
+    ml_model.load_model()
     logger.info("Model loaded successfully.")
     _model_status = "loaded"
 except Exception as exc:

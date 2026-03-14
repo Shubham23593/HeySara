@@ -16,7 +16,7 @@ def _generate_training_data(n_samples: int = 1000, seed: int = 42) -> pd.DataFra
     """Generate synthetic training data with realistic clinical patterns."""
     rng = np.random.default_rng(seed)
 
-    age = rng.integers(1, 121, size=n_samples).astype(float)
+    age = rng.integers(1, 121, size=n_samples).astype(float)  # upper bound exclusive → max age 120
     emergency_level = rng.integers(1, 6, size=n_samples).astype(float)
     previous_visits = rng.integers(0, 21, size=n_samples).astype(float)
     visit_type_encoded = rng.integers(0, 2, size=n_samples).astype(float)
@@ -67,7 +67,7 @@ def train_and_save() -> RandomForestRegressor:
     return model
 
 
-def _load_model() -> RandomForestRegressor:
+def load_model() -> RandomForestRegressor:
     """Load model from disk, training it first if necessary."""
     if not os.path.exists(MODEL_PATH):
         train_and_save()
@@ -77,7 +77,7 @@ def _load_model() -> RandomForestRegressor:
 
 def predict(age: float, emergency_level: float, previous_visits: float, visit_type: str) -> float:
     """Return predicted consultation duration in minutes."""
-    model = _load_model()
+    model = load_model()
     visit_type_encoded = _encode_visit_type(visit_type)
     features = np.array([[age, emergency_level, previous_visits, visit_type_encoded]])
     result = model.predict(features)
