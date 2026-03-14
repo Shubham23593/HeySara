@@ -1,0 +1,199 @@
+.doctor-dashboard {
+  min-height: calc(100vh - 60px);
+  background: var(--background);
+  padding-bottom: 3rem;
+}
+
+.dd-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.dd-header h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.dd-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-top: 0.2rem;
+}
+
+/* Status Button */
+.dd-status-btn {
+  padding: 0.625rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 140px;
+  justify-content: center;
+}
+
+.dd-status-btn.active {
+  background: var(--success);
+  color: #fff;
+}
+
+.dd-status-btn.inactive {
+  background: #94a3b8;
+  color: #fff;
+}
+
+.dd-status-btn:hover:not(:disabled) { opacity: 0.85; }
+.dd-status-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Critical banner */
+.dd-critical-banner {
+  background: #FEE2E2;
+  color: #991B1B;
+  padding: 0.875rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #fecaca;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.dd-banner-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 1.25rem;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.dd-banner-close:hover { opacity: 1; }
+
+/* Stats row */
+.dd-stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.dd-stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1.25rem;
+}
+
+.dd-stat-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.dd-stat-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.dd-stat-red { color: var(--emergency); }
+.dd-stat-green { color: var(--success); }
+.dd-stat-gray { color: #94a3b8; }
+
+/* Queue header */
+.dd-queue-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.dd-queue-header h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Urgent modal */
+.dd-urgent-modal {
+  max-width: 400px;
+}
+
+.dd-urgent-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.dd-urgent-icon { font-size: 1.75rem; }
+
+.dd-urgent-header h3 {
+  flex: 1;
+  font-size: 1.2rem;
+}
+
+.dd-urgent-countdown {
+  background: #FEE2E2;
+  color: #991B1B;
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.dd-urgent-patient {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.dd-urgent-symptoms {
+  background: #F8FAFC;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  border: 1px solid var(--border);
+}
+
+.dd-urgent-symptoms strong {
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.dd-urgent-progress {
+  height: 4px;
+  background: #E2E8F0;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.dd-urgent-progress-bar {
+  height: 100%;
+  background: #DC2626;
+  border-radius: 999px;
+  transition: width 1s linear;
+}
+
+@media (max-width: 640px) {
+  .dd-header { flex-direction: column; align-items: flex-start; }
+  .dd-stats-row { grid-template-columns: 1fr 1fr; }
+}

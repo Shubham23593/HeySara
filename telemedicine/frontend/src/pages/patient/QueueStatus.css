@@ -1,0 +1,184 @@
+.qs-page {
+  min-height: calc(100vh - 60px);
+  background: var(--background);
+  padding-bottom: 3rem;
+}
+
+.qs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.qs-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.qs-not-found {
+  text-align: center;
+  padding: 2.5rem;
+}
+
+.qs-card {
+  margin-bottom: 1rem;
+}
+
+.qs-position-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.qs-position {
+  display: flex;
+  flex-direction: column;
+}
+
+.qs-pos-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+
+.qs-pos-number {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.qs-pos-of {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+/* Progress bar */
+.qs-progress-bar-wrap {
+  margin-bottom: 1.5rem;
+}
+
+.qs-progress-bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+
+.qs-progress-bar-bg {
+  background: #E2E8F0;
+  border-radius: 999px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.qs-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2563EB, #0891b2);
+  border-radius: 999px;
+  transition: width 0.6s ease;
+}
+
+/* Info grid */
+.qs-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.qs-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.qs-info-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.qs-info-value {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Ready banner */
+.qs-ready-banner {
+  margin-top: 1.25rem;
+  background: #DCFCE7;
+  color: #15803D;
+  padding: 0.875rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 1px solid #bbf7d0;
+  text-align: center;
+}
+
+/* Modal */
+.qs-modal {
+  text-align: center;
+}
+
+.qs-modal-icon {
+  font-size: 3rem;
+  margin-bottom: 0.75rem;
+}
+
+.qs-modal h3 {
+  color: var(--primary);
+}
+
+.qs-modal p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: 0.5rem 0 1.25rem;
+}
+
+.qs-mode-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.qs-mode-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1rem 1.75rem;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: #F8FAFC;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 100px;
+}
+
+.qs-mode-btn span:first-child { font-size: 2rem; }
+
+.qs-mode-btn:hover, .qs-mode-btn.selected {
+  border-color: var(--primary);
+  background: #EFF6FF;
+  color: var(--primary);
+}
+
+@media (max-width: 480px) {
+  .qs-pos-number { font-size: 2.25rem; }
+}
