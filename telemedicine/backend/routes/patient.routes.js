@@ -6,8 +6,11 @@ import {
   getQueuePosition,
 } from '../controllers/patient.controller.js';
 import authMiddleware from '../middleware/auth.middleware.js';
+import { apiLimiter } from '../middleware/rateLimiter.middleware.js';
 
 const router = express.Router();
+
+router.use(apiLimiter);
 
 // Join queue is public (form submission without login required)
 router.post('/join-queue', joinQueue);

@@ -8,10 +8,11 @@ import {
 } from '../controllers/doctor.controller.js';
 import authMiddleware from '../middleware/auth.middleware.js';
 import { requireRole } from '../middleware/auth.middleware.js';
+import { apiLimiter } from '../middleware/rateLimiter.middleware.js';
 
 const router = express.Router();
 
-router.use(authMiddleware, requireRole('doctor'));
+router.use(apiLimiter, authMiddleware, requireRole('doctor'));
 
 router.get('/queue', getDoctorQueue);
 router.post('/status', toggleStatus);
