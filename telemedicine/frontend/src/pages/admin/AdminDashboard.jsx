@@ -42,11 +42,11 @@ export default function AdminDashboard() {
         getDoctors(),
         getQueues(),
       ])
-      setStats(dashRes.data)
-      setDoctors(Array.isArray(docRes.data) ? docRes.data : (docRes.data.doctors || []))
-      const qs = Array.isArray(queueRes.data) ? queueRes.data : (queueRes.data.queues || [])
+      setStats(dashRes.data.data)
+      setDoctors(docRes.data.data || [])
+      const qs = queueRes.data.data || []
       setQueues(qs)
-      const totalQ = qs.reduce((a, q) => a + (q.queueLength || 0), 0)
+      const totalQ = qs.reduce((a, q) => a + (q.totalWaiting || 0), 0)
       if (totalQ > SURGE_THRESHOLD) setSurgAlert(true)
     } catch (err) {
       addNotification(err.response?.data?.message || 'Failed to load dashboard data.', 'error')
@@ -81,7 +81,7 @@ export default function AdminDashboard() {
     labels: queues.map(q => q.specialization || 'Unknown'),
     datasets: [{
       label: 'Queue Length',
-      data: queues.map(q => q.queueLength || 0),
+      data: queues.map(q => q.totalWaiting || 0),
       backgroundColor: ['#2563EB', '#16A34A', '#7C3AED', '#D97706', '#DC2626', '#0891b2', '#db2777'],
       borderRadius: 6,
     }],
@@ -112,9 +112,9 @@ export default function AdminDashboard() {
 
   const statCards = [
     { label: 'Total Doctors', value: stats?.totalDoctors ?? doctors.length, icon: '👨‍⚕️' },
-    { label: 'Active Doctors', value: stats?.activeDoctors ?? doctors.filter(d => d.status === 'active').length, icon: '🟢' },
-    { label: 'Patients in Queue', value: stats?.totalPatientsInQueue ?? queues.reduce((a, q) => a + (q.queueLength || 0), 0), icon: '👥' },
-    { label: 'Avg Wait Time', value: `${stats?.avgWaitTime ?? 0}m`, icon: '⏱' },
+    { label: 'Active Doctors', value: stats?.activeDoctors ?? doctors.filter(d => d.status === 'ACTIVE').length, icon: '🟢' },
+    { label: 'Patients in Queue', value: stats?.waitingPatients ?? queues.reduce((a, q) => a + (q.totalWaiting || 0), 0), icon: '👥' },
+    { label: 'Avg Wait Time', value: `${stats?.avgWaitMinutes ?? 0}m`, icon: '⏱' },
   ]
 
   return (
@@ -172,21 +172,21 @@ export default function AdminDashboard() {
                           <td style={{ fontWeight: 600 }}>{q.specialization}</td>
                           <td>
                             <span style={{
-                              background: (q.queueLength || 0) > 10 ? '#FEE2E2' : '#DCFCE7',
-                              color: (q.queueLength || 0) > 10 ? '#991B1B' : '#15803D',
+                              background: (q.totalWaiting || 0) > 10 ? '#FEE2E2' : '#DCFCE7',
+                              color: (q.totalWaiting || 0) > 10 ? '#991B1B' : '#15803D',
                               padding: '0.2rem 0.5rem', borderRadius: 999, fontSize: '0.8rem', fontWeight: 600,
                             }}>
-                              {q.queueLength || 0}
+                              {q.totalWaiting || 0}
                             </span>
                           </td>
                           <td>{q.avgWait || 0}</td>
                           <td>
                             <span style={{
                               padding: '0.2rem 0.625rem', borderRadius: 999, fontSize: '0.75rem', fontWeight: 600,
-                              background: q.status === 'active' ? '#DCFCE7' : '#F1F5F9',
-                              color: q.status === 'active' ? '#15803D' : '#64748B',
+                              background: q.doctorStatus === 'ACTIVE' ? '#DCFCE7' : '#F1F5F9',
+                              color: q.doctorStatus === 'ACTIVE' ? '#15803D' : '#64748B',
                             }}>
-                              {q.status || 'active'}
+                              {q.doctorStatus || 'active'}
                             </span>
                           </td>
                         </tr>
@@ -220,10 +220,10 @@ export default function AdminDashboard() {
                           <td>
                             <span style={{
                               padding: '0.2rem 0.625rem', borderRadius: 999, fontSize: '0.75rem', fontWeight: 600,
-                              background: doc.status === 'active' ? '#DCFCE7' : '#F1F5F9',
-                              color: doc.status === 'active' ? '#15803D' : '#64748B',
+                              background: doc.status === 'ACTIVE' ? '#DCFCE7' : '#F1F5F9',
+                              color: doc.status === 'ACTIVE' ? '#15803D' : '#64748B',
                             }}>
-                              {doc.status === 'active' ? '🟢 Active' : '⚫ Inactive'}
+                              {doc.status === 'ACTIVE' ? '🟢 Active' : '⚫ Inactive'}
                             </span>
                           </td>
                           <td style={{ color: '#64748B', fontSize: '0.875rem' }}>

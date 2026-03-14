@@ -82,6 +82,8 @@ export const getPatientStatus = async (req, res, next) => {
 
     // Calculate queue position
     let queuePosition = null;
+    let totalInQueue = null;
+    let estimatedWaitMinutes = null;
     if (patient.assignedDoctor && patient.status === 'waiting') {
       const queue = await Queue.findOne({ doctor: patient.assignedDoctor._id }).populate('patients');
       if (queue) {
@@ -90,6 +92,11 @@ export const getPatientStatus = async (req, res, next) => {
         );
         const idx = sorted.findIndex((p) => p._id.toString() === patientId);
         queuePosition = idx >= 0 ? idx + 1 : null;
+        totalInQueue = sorted.length;
+        estimatedWaitMinutes = 0;
+        for (let i = 0; i < idx; i++) {
+          estimatedWaitMinutes += sorted[i].predictedDuration || 15;
+        }
       }
     }
 
@@ -105,6 +112,8 @@ export const getPatientStatus = async (req, res, next) => {
         doctorSpecialization: patient.doctorSpecialization,
         assignedDoctor: patient.assignedDoctor,
         queuePosition,
+        totalInQueue,
+        estimatedWaitMinutes,
         joinedAt: patient.joinedAt,
         consultationStartedAt: patient.consultationStartedAt,
         consultationEndedAt: patient.consultationEndedAt,

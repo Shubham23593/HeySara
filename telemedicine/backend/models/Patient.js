@@ -7,7 +7,7 @@ const PatientSchema = new mongoose.Schema({
   gender: { type: String, enum: ['Male', 'Female', 'Other'], required: true },
   email: { type: String, required: true, unique: true, lowercase: true, trim: true },
   password: { type: String, required: true },
-  visitType: { type: String, enum: ['Checkup', 'Follow-up'], required: true },
+  visitType: { type: String, enum: ['Checkup', 'Follow-up'], default: 'Checkup' },
   symptoms: { type: String, default: '' },
   previousVisits: { type: Number, default: 0 },
   emergencyLevel: { type: Number, min: 1, max: 5, default: 1 },

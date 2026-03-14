@@ -26,8 +26,9 @@ export default function QueueStatus() {
     setLoading(true)
     try {
       const res = await getStatus(user._id || user.id)
-      setStatus(res.data)
-      if (res.data?.position === 1 || res.data?.consultationReady) {
+      const data = res.data.data
+      setStatus(data)
+      if (data?.queuePosition === 1 || data?.status === 'in-consultation') {
         setShowModal(true)
       }
     } catch (err) {
@@ -64,8 +65,8 @@ export default function QueueStatus() {
     navigate('/patient/consultation')
   }
 
-  const progressPercent = status && status.totalInQueue && status.position
-    ? Math.max(0, Math.min(100, ((status.totalInQueue - status.position) / status.totalInQueue) * 100))
+  const progressPercent = status && status.totalInQueue && status.queuePosition
+    ? Math.max(0, Math.min(100, ((status.totalInQueue - status.queuePosition) / status.totalInQueue) * 100))
     : 0
 
   return (
@@ -97,7 +98,7 @@ export default function QueueStatus() {
               <div className="qs-position-row">
                 <div className="qs-position">
                   <span className="qs-pos-label">Your Position</span>
-                  <span className="qs-pos-number">#{status.position}</span>
+                  <span className="qs-pos-number">#{status.queuePosition}</span>
                   <span className="qs-pos-of">of {status.totalInQueue || '?'} patients</span>
                 </div>
                 <EmergencyBadge level={status.emergencyLevel || 1} />
@@ -116,15 +117,15 @@ export default function QueueStatus() {
               <div className="qs-info-grid">
                 <div className="qs-info-item">
                   <span className="qs-info-label">⏱ Est. Wait</span>
-                  <span className="qs-info-value">{status.estimatedWait || 0} min</span>
+                  <span className="qs-info-value">{status.estimatedWaitMinutes ?? 0} min</span>
                 </div>
                 <div className="qs-info-item">
                   <span className="qs-info-label">👨‍⚕️ Doctor</span>
-                  <span className="qs-info-value">{status.doctorName || 'TBD'}</span>
+                  <span className="qs-info-value">{status.assignedDoctor?.name || 'TBD'}</span>
                 </div>
                 <div className="qs-info-item">
                   <span className="qs-info-label">🏥 Specialty</span>
-                  <span className="qs-info-value">{status.specialization || '—'}</span>
+                  <span className="qs-info-value">{status.doctorSpecialization || '—'}</span>
                 </div>
                 <div className="qs-info-item">
                   <span className="qs-info-label">📅 Joined</span>
@@ -134,7 +135,7 @@ export default function QueueStatus() {
                 </div>
               </div>
 
-              {status.position === 1 && (
+              {status.queuePosition === 1 && (
                 <div className="qs-ready-banner">
                   🎉 You&apos;re next! The doctor is almost ready for you.
                 </div>

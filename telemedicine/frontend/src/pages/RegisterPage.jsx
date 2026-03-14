@@ -5,15 +5,15 @@ import LoadingSpinner from '../components/LoadingSpinner.jsx'
 import './LoginPage.css'
 
 const SPECIALIZATIONS = [
-  'General', 'Cardiology', 'Neurology', 'Orthopedics',
-  'Pediatrics', 'Dermatology', 'Psychiatry',
+  'General Physician', 'Cardiologist', 'Neurologist', 'Orthopedic',
+  'Dermatologist', 'Psychiatrist', 'Pulmonologist', 'Gastroenterologist',
 ]
 
 export default function RegisterPage() {
   const navigate = useNavigate()
   const [form, setForm] = useState({
     name: '', email: '', password: '', confirmPassword: '',
-    role: 'patient', specialization: 'General', age: '', gender: 'Male',
+    role: 'patient', specialization: 'General Physician', age: '', gender: 'Male',
   })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')

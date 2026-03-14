@@ -37,7 +37,7 @@ export default function PatientDashboard() {
     if (!user) return
     try {
       const res = await getStatus(user._id || user.id)
-      setQueueInfo(res.data)
+      setQueueInfo(res.data.data)
     } catch {
       setQueueInfo(null)
     } finally {
@@ -118,19 +118,19 @@ export default function PatientDashboard() {
             <div className="pd-status-grid">
               <div className="pd-status-item">
                 <span className="pd-status-label">Position</span>
-                <span className="pd-status-value">#{queueInfo.position || '—'}</span>
+                <span className="pd-status-value">#{queueInfo.queuePosition || '—'}</span>
               </div>
               <div className="pd-status-item">
                 <span className="pd-status-label">Est. Wait</span>
-                <span className="pd-status-value">{queueInfo.estimatedWait || '—'} min</span>
+                <span className="pd-status-value">{queueInfo.estimatedWaitMinutes ?? '—'} min</span>
               </div>
               <div className="pd-status-item">
                 <span className="pd-status-label">Doctor</span>
-                <span className="pd-status-value">{queueInfo.doctorName || 'Assigned'}</span>
+                <span className="pd-status-value">{queueInfo.assignedDoctor?.name || 'Assigned'}</span>
               </div>
               <div className="pd-status-item">
                 <span className="pd-status-label">Specialization</span>
-                <span className="pd-status-value">{queueInfo.specialization || '—'}</span>
+                <span className="pd-status-value">{queueInfo.doctorSpecialization || '—'}</span>
               </div>
             </div>
             <button className="btn btn-primary" onClick={() => navigate('/patient/status')}>

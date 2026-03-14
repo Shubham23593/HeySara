@@ -13,17 +13,17 @@ export const login = (data) => api.post('/auth/login', data)
 export const register = (data) => api.post('/auth/register', data)
 
 // Patient
-export const joinQueue = (data) => api.post('/queue/join', data)
-export const getStatus = (patientId) => api.get(`/queue/status/${patientId}`)
-export const urgentRequest = (data) => api.post('/queue/urgent', data)
-export const getQueuePosition = (patientId) => api.get(`/queue/position/${patientId}`)
+export const joinQueue = (data) => api.post('/patient/join-queue', data)
+export const getStatus = (patientId) => api.get(`/patient/status/${patientId}`)
+export const urgentRequest = (data) => api.post('/patient/urgent-request', data)
+export const getQueuePosition = (patientId) => api.get(`/patient/queue-position/${patientId}`)
 
 // Doctor
 export const getQueue = () => api.get('/doctor/queue')
-export const updateStatus = (status) => api.put('/doctor/status', { status })
-export const startSession = (patientId) => api.post(`/doctor/session/start/${patientId}`)
-export const endSession = (patientId, duration) => api.post(`/doctor/session/end/${patientId}`, { duration })
-export const acceptUrgent = (patientId) => api.post(`/doctor/urgent/accept/${patientId}`)
+export const updateStatus = (status) => api.post('/doctor/status', { status })
+export const startSession = (patientId) => api.post(`/doctor/start-session/${patientId}`)
+export const endSession = (patientId, duration) => api.post(`/doctor/end-session/${patientId}`, { duration })
+export const acceptUrgent = (patientId) => api.post(`/doctor/accept-urgent/${patientId}`)
 
 // Admin
 export const getDashboard = () => api.get('/admin/dashboard')

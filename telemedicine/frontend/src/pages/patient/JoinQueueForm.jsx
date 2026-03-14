@@ -49,7 +49,8 @@ export default function JoinQueueForm() {
     try {
       const [res] = await Promise.all([
         joinQueue({
-          patientId: user._id || user.id,
+          patientId: user?._id || user?.id,
+          email: user?.email,
           name: form.name,
           age: parseInt(form.age),
           gender: form.gender,
@@ -59,7 +60,7 @@ export default function JoinQueueForm() {
         }),
         runStages(),
       ])
-      setResult(res.data)
+      setResult(res.data.data)
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to join queue. Please try again.')
     } finally {
@@ -95,7 +96,7 @@ export default function JoinQueueForm() {
               </div>
               <div className="join-result-item">
                 <span className="join-result-label">Specialization</span>
-                <span className="join-result-value">{result.specialization || '—'}</span>
+                <span className="join-result-value">{result.doctorSpecialization || '—'}</span>
               </div>
               <div className="join-result-item">
                 <span className="join-result-label">Predicted Duration</span>

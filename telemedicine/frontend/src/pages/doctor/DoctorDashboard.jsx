@@ -15,7 +15,7 @@ export default function DoctorDashboard() {
 
   const [queue, setQueue] = useState([])
   const [loading, setLoading] = useState(true)
-  const [doctorStatus, setDoctorStatus] = useState('inactive')
+  const [doctorStatus, setDoctorStatus] = useState(user?.status || 'INACTIVE')
   const [statusLoading, setStatusLoading] = useState(false)
   const [urgentPopup, setUrgentPopup] = useState(null)
   const [urgentCountdown, setUrgentCountdown] = useState(30)
@@ -35,7 +35,7 @@ export default function DoctorDashboard() {
   const fetchQueue = useCallback(async () => {
     try {
       const res = await getQueue()
-      const patients = Array.isArray(res.data) ? res.data : (res.data.queue || [])
+      const patients = res.data.data?.patients || []
       setQueue(patients)
       setCriticalAlert(patients.some(p => p.emergencyLevel === 5))
     } catch (err) {
@@ -86,7 +86,7 @@ export default function DoctorDashboard() {
   }, [urgentPopup])
 
   const handleToggleStatus = async () => {
-    const newStatus = doctorStatus === 'active' ? 'inactive' : 'active'
+    const newStatus = doctorStatus === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE'
     setStatusLoading(true)
     try {
       await updateStatus(newStatus)
@@ -142,12 +142,12 @@ export default function DoctorDashboard() {
             <p className="dd-subtitle">{user?.specialization || 'General'} · Telemedicine Dashboard</p>
           </div>
           <button
-            className={`dd-status-btn ${doctorStatus === 'active' ? 'active' : 'inactive'}`}
+            className={`dd-status-btn ${doctorStatus === 'ACTIVE' ? 'active' : 'inactive'}`}
             onClick={handleToggleStatus}
             disabled={statusLoading}
           >
             {statusLoading ? <LoadingSpinner size="small" center={false} color="#fff" /> :
-              doctorStatus === 'active' ? '🟢 Set Inactive' : '⚫ Go Active'}
+              doctorStatus === 'ACTIVE' ? '🟢 Set Inactive' : '⚫ Go Active'}
           </button>
         </div>
 
@@ -177,8 +177,8 @@ export default function DoctorDashboard() {
           </div>
           <div className="dd-stat-card card">
             <span className="dd-stat-label">Your Status</span>
-            <span className={`dd-stat-value ${doctorStatus === 'active' ? 'dd-stat-green' : 'dd-stat-gray'}`}>
-              {doctorStatus === 'active' ? 'Active' : 'Inactive'}
+            <span className={`dd-stat-value ${doctorStatus === 'ACTIVE' ? 'dd-stat-green' : 'dd-stat-gray'}`}>
+              {doctorStatus === 'ACTIVE' ? 'Active' : 'Inactive'}
             </span>
           </div>
         </div>
