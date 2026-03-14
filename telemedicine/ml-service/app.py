@@ -12,10 +12,10 @@ app = Flask(__name__)
 CORS(app)
 
 # Ensure the model is available at startup (trains automatically if missing)
-logger.info("Initialising ML model…")
+logger.info("Initializing ML model…")
 try:
     if not os.path.exists(ml_model.MODEL_PATH):
-        logger.info("model.pkl not found – training now…")
+        logger.info("model.pkl not found - training now…")
         ml_model.train_and_save()
         logger.info("Training complete.")
     # Warm-up load to catch any persistence issues early
